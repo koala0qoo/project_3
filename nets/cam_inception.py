@@ -26,12 +26,15 @@ def cam_inception(inputs, num_classes=number_of_classes, is_training=True, reuse
     inception_c_feature = net
     with tf.variable_scope('cam_classifier/A'):
         net = slim.conv2d(inception_c_feature, 1024, [3, 3],
+                          weights_initializer=tf.truncated_normal_initializer(stddev=0.01),
                           padding='SAME',
                           scope='conv1_3x3')
         net = slim.conv2d(net, 1024, [3, 3],
+                          weights_initializer=tf.truncated_normal_initializer(stddev=0.01),
                           padding='SAME',
                           scope='conv2_3x3')
         net = slim.conv2d(net, num_classes, [1, 1],
+                          weights_initializer=tf.truncated_normal_initializer(stddev=0.01),
                           activation_fn=None,
                           scope='conv3_1x1')
         end_points['features_A'] = net
